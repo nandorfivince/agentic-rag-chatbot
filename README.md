@@ -177,27 +177,27 @@ melyik fut.
 ```
 ┌──────────────────────────────────────────────────────────────────┐
 │  UI réteg — Streamlit (app.py)                                   │
-│  ┌──────────────────┐  ┌──────────────┐  ┌──────────────────┐   │
-│  │ Fájl-feltöltés   │  │ Chat-       │  │ Agent trace +     │   │
-│  │ (PDF/DOCX/PNG)   │  │ interfész   │  │ RAG találatok     │   │
-│  └──────────────────┘  └──────────────┘  └──────────────────┘   │
+│  ┌──────────────────┐  ┌──────────────┐  ┌───────────────────┐   │
+│  │ Fájl-feltöltés   │  │ Chat-        │  │ Agent trace +     │   │
+│  │ (PDF/DOCX/PNG)   │  │ interfész    │  │ RAG találatok     │   │
+│  └──────────────────┘  └──────────────┘  └───────────────────┘   │
 └──────────────────────────────────────────────────────────────────┘
                               │
 ┌──────────────────────────────────────────────────────────────────┐
 │  Agentic mag — LangGraph workflow                                │
 │  Fő gráf — 6 node:                                               │
 │    intent → planner → agent ↔ tools → synth → validator          │
-│                                                                   │
+│                                                                  │
 │  RAG subgraph (3 node):              5 tool a ToolNode-ban:      │
 │    retrieve → rerank → format          list / get / search /     │
 │    (search_documents tool hívja)       compare / validate        │
 └──────────────────────────────────────────────────────────────────┘
                               │
-┌────────────────────────────┐  ┌─────────────────────────────────┐
-│  Perzisztencia             │  │  LLM (cserélhető)                │
-│  ChromaDB + BM25 (RRF k=60)│  │  Ollama · Llama 3.1 8B (lokális) │
-│  sentence-transformers MiniLM│ │  Dummy LLM (deterministic stub)  │
-└────────────────────────────┘  └─────────────────────────────────┘
+┌──────────────────────────────┐  ┌──────────────────────────────────┐
+│  Perzisztencia               │  │  LLM (cserélhető)                │
+│  ChromaDB + BM25 (RRF k=60)  │  │  Ollama · Llama 3.1 8B (lokális) │
+│  sentence-transformers MiniLM│  │  Dummy LLM (deterministic stub)  │
+└──────────────────────────────┘  └──────────────────────────────────┘
 ```
 
 ### Mappa-szerkezet
@@ -272,15 +272,15 @@ saját compile, és a `search_documents` tool-on keresztül érhető el.
 search_documents tool
         │
         ▼
-┌──────────────────────────────────────────────┐
-│  RAG subgraph (3 node)                       │
+┌───────────────────────────────────────────────┐
+│  RAG subgraph (3 node)                        │
 │                                               │
-│  1. retrieve   →   2. rerank   →   3. format │
+│  1. retrieve   →   2. rerank   →   3. format  │
 │  query embed       RRF fusion       chunk +   │
 │  + Chroma cos      (k=60)           score +   │
 │  + BM25 token      vektor + BM25    forrás-fáj│
 │  top_k×2 kand.     score → top_k    relatív   │
-└──────────────────────────────────────────────┘
+└───────────────────────────────────────────────┘
 ```
 
 ### Hibrid keresés — miért nem csak vektor?

@@ -1,0 +1,51 @@
+services:
+  # ---------------------------------------------------------------------------
+  # Streamlit app (LangGraph agentic RAG)
+  # ---------------------------------------------------------------------------
+  app:
+    build: .
+    image: agentic-rag-chatbot-app:latest
+    container_name: agentic-rag-chatbot-app
+    ports:
+      - "8501:8501"
+    environment:
+      # LLM provider: "dummy" (default) -- Ollama nelkul is fut out-of-the-box
+      # Ha ollama-t akarsz: LLM_PROVIDER=ollama docker compose up
+      - LLM_PROVIDER=${LLM_PROVIDER:-dummy}
+      - OLLAMA_HOST=http://ollama:11434
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama3.1:8b}
+      - EMBEDDING_MODEL=paraphrase-multilingual-MiniLM-L12-v2
+      - CHROMA_PATH=/app/chroma_db
+    volumes:
+      # Perzisztens ChromaDB (a container torlesekor is megmarad)
+      - ./chroma_db:/app/chroma_db
+    depends_on:
+      # Ha LLM_PROVIDER=dummy, az ollama container is elindul, de nem lesz
+      # kulcsfunkcionalis. Ha lekapcsolni szeretned, hasznalj profile-t vagy
+      # a "docker compose up app" parancsot.
+      ollama:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Ollama LLM szerver (opcionalis) -- nyilt modellek Llama 3.1 / Mistral / stb.
+  # ---------------------------------------------------------------------------
+  # Az elso inditas utan be kell huzni egy modellt:
+  #   docker compose exec ollama ollama pull llama3.1:8b
+  ollama:
+    image: ollama/ollama:latest
+    container_name: agentic-rag-chatbot-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+volumes:
+  ollama_data:

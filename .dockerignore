@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
+.ruff_cache
+.venv
+venv
+
+# IDE
+.vscode
+.idea
+.DS_Store
+
+# Perzisztens adat (mount-oljuk, ne image-be sutjuk)
+chroma_db/
+
+# Feleslegek a Docker image-ben
+langgraph_tutorial/
+tervek/
+feladat-leiras-medior-ai-engineer.pdf
+feladat-leiras-medior-ai-engineer.md
+eval/results.md
+load/results.md
+
+# Node (ha lenne)
+node_modules/

@@ -1,0 +1,107 @@
+[
+  {
+    "id": "q01",
+    "category": "list",
+    "question": "Hany dokumentum van feltoltve es milyen tipusuak?",
+    "expected_tools": ["list_documents"],
+    "expected_substrings": ["szamla", "szerzodes"]
+  },
+  {
+    "id": "q02",
+    "category": "list",
+    "question": "Milyen fajlokat latsz?",
+    "expected_tools": ["list_documents"],
+    "expected_substrings": [".pdf"]
+  },
+  {
+    "id": "q03",
+    "category": "extract",
+    "question": "Mekkora a szamla_januar.pdf brutto vegosszege?",
+    "expected_tools": ["list_documents", "get_extraction"],
+    "expected_substrings": ["2540000", "2 540 000", "2,540,000", "brutto_vegosszeg"]
+  },
+  {
+    "id": "q04",
+    "category": "extract",
+    "question": "Ki allitotta ki a szamla_marcius.pdf-et?",
+    "expected_tools": ["get_extraction"],
+    "expected_substrings": ["CsimpiTech", "kiallito"]
+  },
+  {
+    "id": "q05",
+    "category": "extract",
+    "question": "Mi a fizetesi hatarido a szamla_epitokezi.pdf-en?",
+    "expected_tools": ["get_extraction"],
+    "expected_substrings": ["2026.05", "2026-05", "fizetesi"]
+  },
+  {
+    "id": "q06",
+    "category": "search",
+    "question": "Melyik dokumentumban keresunk szallitasi hataridorol informaciot?",
+    "expected_tools": ["search_documents"],
+    "expected_substrings": ["megrendel", "szallit"]
+  },
+  {
+    "id": "q07",
+    "category": "search",
+    "question": "Milyen kotber van az NDA-ban? Keresd meg.",
+    "expected_tools": ["search_documents"],
+    "expected_substrings": ["kotber", "kötbér", "5", "ndá"]
+  },
+  {
+    "id": "q08",
+    "category": "search",
+    "question": "Mit tartalmaz a change of control zaradek?",
+    "expected_tools": ["search_documents"],
+    "expected_substrings": ["50", "tulajdonos", "felmondani", "change"]
+  },
+  {
+    "id": "q09",
+    "category": "compare",
+    "question": "Hasonlitsd ossze a szamla_januar.pdf es a szamla_marcius.pdf arait.",
+    "expected_tools": ["get_extraction", "compare_documents"],
+    "expected_substrings": ["elter", "kulonbs", "netto_vegosszeg", "brutto"]
+  },
+  {
+    "id": "q10",
+    "category": "compare",
+    "question": "Mennyivel dragabb a szamla_marcius.pdf a szamla_januar.pdf-nel?",
+    "expected_tools": ["get_extraction", "compare_documents"],
+    "expected_substrings": ["elter", "kulonbs", "netto_vegosszeg"]
+  },
+  {
+    "id": "q11",
+    "category": "compare",
+    "question": "Van-e elteres a megrendeles_epitokezi.pdf es a szallitolevel_epitokezi.pdf kozott?",
+    "expected_tools": ["compare_documents"],
+    "expected_substrings": ["HI-100", "elter", "38", "40"]
+  },
+  {
+    "id": "q12",
+    "category": "validate",
+    "question": "Ellenorizd a szamla_januar.pdf matematikat.",
+    "expected_tools": ["validate_document"],
+    "expected_substrings": ["ok", "hiba", "rendben", "error"]
+  },
+  {
+    "id": "q13",
+    "category": "validate",
+    "question": "Van-e matematikai hiba a szamla_epitokezi.pdf-ben?",
+    "expected_tools": ["validate_document"],
+    "expected_substrings": ["error", "ok", "szamla_epitokezi"]
+  },
+  {
+    "id": "q14",
+    "category": "validate",
+    "question": "Ervenyes-e az adoszam a szamla_marcius.pdf-en?",
+    "expected_tools": ["validate_document"],
+    "expected_substrings": ["adoszam", "ok", "error", "12345678"]
+  },
+  {
+    "id": "q15",
+    "category": "compare",
+    "question": "A szamla_epitokezi.pdf es a szallitolevel_epitokezi.pdf kozott van-e tetel-mennyiseg elteres?",
+    "expected_tools": ["compare_documents"],
+    "expected_substrings": ["HI-100", "elter", "2", "38", "40"]
+  }
+]

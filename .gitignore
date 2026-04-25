@@ -1,0 +1,79 @@
+# =============================================================================
+# Python
+# =============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtuális környezet (NEM hordozható mappa-másolással — minden új helyen
+# `python3.12 -m venv .venv` paranccsal újra létre kell hozni)
+.venv/
+venv/
+env/
+ENV/
+
+# Disztribúció / build
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+
+# =============================================================================
+# Tesztelés / coverage
+# =============================================================================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+
+# =============================================================================
+# Környezeti változók — TITKOK
+# =============================================================================
+# A .env tartalmazhat API-kulcsokat — soha ne kerüljön repóba.
+.env
+.env.local
+.env.*.local
+# A .env.example MEGY a repóba — minta változókkal:
+!.env.example
+
+# =============================================================================
+# ChromaDB perzisztens cache — futási időben (auto)generálódik
+# =============================================================================
+# Az első PDF-feltöltéskor automatikusan újraépül; nem kell kommitolni.
+chroma_db/
+
+# =============================================================================
+# Naplók
+# =============================================================================
+install.log
+*.log
+
+# =============================================================================
+# Sentence-transformers / HuggingFace cache (lokális futtatás esetén)
+# =============================================================================
+.cache/
+~/.cache/huggingface/
+
+# =============================================================================
+# IDE / szerkesztő
+# =============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# =============================================================================
+# Node (defenzív — nincs használva, de ha valaki utólag bevonna)
+# =============================================================================
+node_modules/
+
